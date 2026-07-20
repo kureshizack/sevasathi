@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">
+  <g fill="none" stroke="#C0552B" stroke-opacity="0.06" stroke-width="1.5">
+    <!-- central mandala -->
+    <g id="m" transform="translate(300 300)">
+      <circle r="18"/>
+      <circle r="42"/>
+      <circle r="96"/>
+      <circle r="150"/>
+      <g id="petals">
+        <path d="M0 -42 C 14 -66, 14 -84, 0 -96 C -14 -84, -14 -66, 0 -42 Z"/>
+        <path d="M0 -42 C 14 -66, 14 -84, 0 -96 C -14 -84, -14 -66, 0 -42 Z" transform="rotate(45)"/>
+        <path d="M0 -42 C 14 -66, 14 -84, 0 -96 C -14 -84, -14 -66, 0 -42 Z" transform="rotate(90)"/>
+        <path d="M0 -42 C 14 -66, 14 -84, 0 -96 C -14 -84, -14 -66, 0 -42 Z" transform="rotate(135)"/>
+        <path d="M0 -42 C 14 -66, 14 -84, 0 -96 C -14 -84, -14 -66, 0 -42 Z" transform="rotate(180)"/>
+        <path d="M0 -42 C 14 -66, 14 -84, 0 -96 C -14 -84, -14 -66, 0 -42 Z" transform="rotate(225)"/>
+        <path d="M0 -42 C 14 -66, 14 -84, 0 -96 C -14 -84, -14 -66, 0 -42 Z" transform="rotate(270)"/>
+        <path d="M0 -42 C 14 -66, 14 -84, 0 -96 C -14 -84, -14 -66, 0 -42 Z" transform="rotate(315)"/>
+      </g>
+      <g id="outer-petals">
+        <path d="M0 -96 C 20 -118, 20 -136, 0 -150 C -20 -136, -20 -118, 0 -96 Z"/>
+        <path d="M0 -96 C 20 -118, 20 -136, 0 -150 C -20 -136, -20 -118, 0 -96 Z" transform="rotate(45)"/>
+        <path d="M0 -96 C 20 -118, 20 -136, 0 -150 C -20 -136, -20 -118, 0 -96 Z" transform="rotate(90)"/>
+        <path d="M0 -96 C 20 -118, 20 -136, 0 -150 C -20 -136, -20 -118, 0 -96 Z" transform="rotate(135)"/>
+        <path d="M0 -96 C 20 -118, 20 -136, 0 -150 C -20 -136, -20 -118, 0 -96 Z" transform="rotate(180)"/>
+        <path d="M0 -96 C 20 -118, 20 -136, 0 -150 C -20 -136, -20 -118, 0 -96 Z" transform="rotate(225)"/>
+        <path d="M0 -96 C 20 -118, 20 -136, 0 -150 C -20 -136, -20 -118, 0 -96 Z" transform="rotate(270)"/>
+        <path d="M0 -96 C 20 -118, 20 -136, 0 -150 C -20 -136, -20 -118, 0 -96 Z" transform="rotate(315)"/>
+      </g>
+      <g id="dots">
+        <circle cx="0" cy="-123" r="4"/>
+        <circle cx="87" cy="-87" r="4"/>
+        <circle cx="123" cy="0" r="4"/>
+        <circle cx="87" cy="87" r="4"/>
+        <circle cx="0" cy="123" r="4"/>
+        <circle cx="-87" cy="87" r="4"/>
+        <circle cx="-123" cy="0" r="4"/>
+        <circle cx="-87" cy="-87" r="4"/>
+      </g>
+    </g>
+    <!-- corner quarter-mandalas for seamless tiling -->
+    <g transform="translate(0 0)"><circle r="70"/><circle r="120"/><path d="M0 -70 C 16 -92, 16 -106, 0 -120 C -16 -106, -16 -92, 0 -70 Z"/><path d="M70 0 C 92 16, 106 16, 120 0 C 106 -16, 92 -16, 70 0 Z"/></g>
+    <g transform="translate(600 0)"><circle r="70"/><circle r="120"/><path d="M0 -70 C 16 -92, 16 -106, 0 -120 C -16 -106, -16 -92, 0 -70 Z"/><path d="M-70 0 C -92 16, -106 16, -120 0 C -106 -16, -92 -16, -70 0 Z"/></g>
+    <g transform="translate(0 600)"><circle r="70"/><circle r="120"/><path d="M0 70 C 16 92, 16 106, 0 120 C -16 106, -16 92, 0 70 Z"/><path d="M70 0 C 92 16, 106 16, 120 0 C 106 -16, 92 -16, 70 0 Z"/></g>
+    <g transform="translate(600 600)"><circle r="70"/><circle r="120"/><path d="M0 70 C 16 92, 16 106, 0 120 C -16 106, -16 92, 0 70 Z"/><path d="M-70 0 C -92 16, -106 16, -120 0 C -106 -16, -92 -16, -70 0 Z"/></g>
+    <!-- edge midpoints -->
+    <g transform="translate(300 0)"><circle r="46"/><path d="M0 -26 C 10 -36, 10 -42, 0 -46 C -10 -42, -10 -36, 0 -26 Z"/></g>
+    <g transform="translate(300 600)"><circle r="46"/><path d="M0 26 C 10 36, 10 42, 0 46 C -10 42, -10 36, 0 26 Z"/></g>
+    <g transform="translate(0 300)"><circle r="46"/><path d="M-26 0 C -36 10, -42 10, -46 0 C -42 -10, -36 -10, -26 0 Z"/></g>
+    <g transform="translate(600 300)"><circle r="46"/><path d="M26 0 C 36 10, 42 10, 46 0 C 42 -10, 36 -10, 26 0 Z"/></g>
+  </g>
+</svg>
