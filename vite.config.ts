@@ -23,8 +23,11 @@ function ghPagesSpaFallback(): Plugin {
 }
 
 // https://vite.dev/config/
+// VITE_BASE_PATH is set by the GitHub Actions workflow to /<repo-name>/
+// so the site works on username.github.io/<repo-name>/ project pages.
+// Locally and on root-domain hosting (Cloudflare/custom domain) it stays './'.
 export default defineConfig({
-  base: './',
+  base: process.env.VITE_BASE_PATH || './',
   plugins: [inspectAttr(), react(), ghPagesSpaFallback()],
   server: {
     port: 3000,
