@@ -6,7 +6,7 @@
 
 import { useEffect, useState } from 'react';
 import { GOOGLE_SHEET_ID, SHEET_TABS, type SheetTab } from './sheetConfig';
-import type { Job, Scheme, TickerItem, Tint } from './data';
+import type { Job, LiveUpdate, LiveUpdateCategory, Scheme, TickerItem, Tint } from './data';
 
 export type SheetRow = Record<string, string>;
 
@@ -45,8 +45,26 @@ export function toISODate(raw: string): string {
   return '';
 }
 
+/**
+ * Resolve whatever the owner pasted in sheetConfig — normal Sheet ID,
+ * "Publish to web" 2PACX ID, or any full Google Sheets URL — into the
+ * correct gviz base URL. Published (2PACX) sheets use the /d/e/ form.
+ */
+function gvizBase(): string | null {
+  const raw = GOOGLE_SHEET_ID.trim();
+  if (!raw) return null;
+  const published = raw.match(/\/d\/e\/([A-Za-z0-9-_]+)/);
+  if (published) return `https://docs.google.com/spreadsheets/d/e/${published[1]}`;
+  const normal = raw.match(/\/d\/([A-Za-z0-9-_]+)/);
+  if (normal) return `https://docs.google.com/spreadsheets/d/${normal[1]}`;
+  if (raw.startsWith('2PACX')) return `https://docs.google.com/spreadsheets/d/e/${raw}`;
+  return `https://docs.google.com/spreadsheets/d/${raw}`;
+}
+
 async function fetchTab(tabName: string): Promise<SheetRow[]> {
-  const url = `https://docs.google.com/spreadsheets/d/${GOOGLE_SHEET_ID}/gviz/tq?tqx=out:json&headers=1&sheet=${encodeURIComponent(tabName)}`;
+  const base = gvizBase();
+  if (!base) return [];
+  const url = `${base}/gviz/tq?tqx=out:json&headers=1&sheet=${encodeURIComponent(tabName)}`;
   const res = await fetch(url);
   if (!res.ok) throw new Error(`sheet ${res.status}`);
   const text = await res.text();
@@ -172,4 +190,39 @@ export function useSheetTickerItems(): TickerItem[] {
       text: { hi: r['headline'], en: r['headline'] },
       href: r['link'] || '/jobs',
     }));
+}
+
+const VALID_UPDATE_CATEGORIES: LiveUpdateCategory[] = [
+  'job',
+  'exam',
+  'admit',
+  'result',
+  'cbse',
+  'tech',
+  'ai',
+  'news',
+];
+
+/**
+ * Updates tab: Text | Category | Link | Date — the owner's daily
+ * live-news feed (exams, hall tickets, job ads, tech/AI news, CBSE).
+ * Category accepts: job, exam, admit, result, cbse, tech, ai, news.
+ * Date: dd-mm-yyyy or yyyy-mm-dd (optional but recommended).
+ */
+export function useSheetUpdates(): LiveUpdate[] {
+  const rows = useSheetRows('updates');
+  return rows
+    .map((r, i): LiveUpdate | null => {
+      if (!r['text']) return null;
+      const cat = (r['category'] || '').trim().toLowerCase() as LiveUpdateCategory;
+      return {
+        id: `sheet-update-${i}`,
+        text: { hi: r['text'], en: r['text'] },
+        category: VALID_UPDATE_CATEGORIES.includes(cat) ? cat : 'news',
+        href: r['link'] || '/',
+        date: toISODate(r['date'] ?? '') || '',
+      };
+    })
+    .filter((u): u is LiveUpdate => Boolean(u))
+    .sort((a, b) => (b.date || '').localeCompare(a.date || ''));
 }

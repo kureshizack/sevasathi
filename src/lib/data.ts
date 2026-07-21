@@ -1854,3 +1854,115 @@ export function removeRecentSearch(query: string): string[] {
 export function clearRecentSearches(): string[] {
   return writeRecentSearches([]);
 }
+
+/* ------------------------------------------------------------------ */
+/* Live Updates feed (home page "ताज़ा अपडेट" section)                 */
+/* Owner can post daily via Google Sheet "Updates" tab — sheet items  */
+/* appear above these built-in items automatically.                   */
+/* ------------------------------------------------------------------ */
+
+export type LiveUpdateCategory =
+  | 'job'
+  | 'exam'
+  | 'admit'
+  | 'result'
+  | 'cbse'
+  | 'tech'
+  | 'ai'
+  | 'news';
+
+export interface LiveUpdate {
+  id: string;
+  text: Bi;
+  category: LiveUpdateCategory;
+  href: string;
+  /** ISO yyyy-mm-dd */
+  date: string;
+}
+
+export const liveUpdateCategoryMeta: Record<
+  LiveUpdateCategory,
+  { label: Bi; chip: string }
+> = {
+  job: { label: { hi: 'नौकरी', en: 'Job' }, chip: 'bg-terracotta-100 text-terracotta-700' },
+  exam: { label: { hi: 'परीक्षा', en: 'Exam' }, chip: 'bg-amber-100 text-amber-600' },
+  admit: { label: { hi: 'एडमिट कार्ड', en: 'Admit Card' }, chip: 'bg-cocoa-100 text-cocoa-500' },
+  result: { label: { hi: 'रिज़ल्ट', en: 'Result' }, chip: 'bg-leaf-100 text-leaf-600' },
+  cbse: { label: { hi: 'CBSE', en: 'CBSE' }, chip: 'bg-amber-100 text-amber-600' },
+  tech: { label: { hi: 'टेक्नोलॉजी', en: 'Tech' }, chip: 'bg-leaf-100 text-leaf-600' },
+  ai: { label: { hi: 'AI', en: 'AI' }, chip: 'bg-rose-100 text-rose-500' },
+  news: { label: { hi: 'ताज़ा खबर', en: 'News' }, chip: 'bg-sand-200 text-ink-600' },
+};
+
+export const liveUpdates: LiveUpdate[] = [
+  {
+    id: 'lu-cbse-compartment',
+    text: { hi: 'CBSE 10वीं Compartment Result 2026 जारी — अभी चेक करें', en: 'CBSE Class 10 Compartment Result 2026 declared — check now' },
+    category: 'cbse',
+    href: '/exams',
+    date: '2026-07-21',
+  },
+  {
+    id: 'lu-rrb-alp-admit',
+    text: { hi: 'RRB ALP CBT-2 एडमिट कार्ड जारी — Hall Ticket डाउनलोड करें', en: 'RRB ALP CBT-2 admit card out — download hall ticket' },
+    category: 'admit',
+    href: '/jobs',
+    date: '2026-07-21',
+  },
+  {
+    id: 'lu-ssc-cgl-extended',
+    text: { hi: 'SSC CGL 2026: आवेदन की आखिरी तारीख बढ़ी — अब 28 जुलाई तक करें apply', en: 'SSC CGL 2026 application deadline extended to 28 July' },
+    category: 'job',
+    href: '/jobs',
+    date: '2026-07-20',
+  },
+  {
+    id: 'lu-ibps-po',
+    text: { hi: 'IBPS PO 2026 Notification जारी — 5,208 पदों पर आवेदन शुरू', en: 'IBPS PO 2026 notification out — applications open for 5,208 posts' },
+    category: 'job',
+    href: '/jobs',
+    date: '2026-07-20',
+  },
+  {
+    id: 'lu-upsc-cds',
+    text: { hi: 'UPSC CDS II परीक्षा 13 सितंबर को — Admit Card जल्द, तैयारी जारी रखें', en: 'UPSC CDS II exam on 13 September — admit card soon' },
+    category: 'exam',
+    href: '/exams',
+    date: '2026-07-19',
+  },
+  {
+    id: 'lu-cbse-datesheet',
+    text: { hi: 'CBSE Board 2027: 10वीं-12वीं Date Sheet जारी — परीक्षा 15 फरवरी से', en: 'CBSE Board 2027 date sheet released — exams from 15 February' },
+    category: 'cbse',
+    href: '/exams',
+    date: '2026-07-18',
+  },
+  {
+    id: 'lu-ai-sakhi',
+    text: { hi: 'सरकार का नया AI चैटबॉट "किसान सखी" — फसल सलाह अब WhatsApp पर', en: 'Govt launches "Kisan Sakhi" AI chatbot — crop advice on WhatsApp' },
+    category: 'ai',
+    href: '/lifehacks',
+    date: '2026-07-18',
+  },
+  {
+    id: 'lu-upi-lite',
+    text: { hi: 'UPI Lite लिमिट ₹1,000 हुई — बिना PIN छोटे पेमेंट अब और आसान', en: 'UPI Lite limit raised to ₹1,000 — small payments without PIN' },
+    category: 'tech',
+    href: '/lifehacks',
+    date: '2026-07-17',
+  },
+  {
+    id: 'lu-ctet-dec',
+    text: { hi: 'CTET दिसंबर 2026 Notification जारी — शिक्षक भर्ती का सुनहरा मौका', en: 'CTET December 2026 notification out — golden chance for teachers' },
+    category: 'exam',
+    href: '/exams',
+    date: '2026-07-17',
+  },
+  {
+    id: 'lu-neet-counselling',
+    text: { hi: 'NEET UG 2026 Counselling Round 2 शुरू — Choice filling 24 जुलाई तक', en: 'NEET UG 2026 counselling Round 2 begins — choice filling till 24 July' },
+    category: 'result',
+    href: '/exams',
+    date: '2026-07-16',
+  },
+];
