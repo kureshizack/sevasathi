@@ -1,10 +1,8 @@
 name: Deploy to GitHub Pages
 
-# Runs automatically on every push to master — builds the site and
-# publishes dist/ to GitHub Pages. No manual steps after one-time setup.
 on:
   push:
-    branches: [master]
+    branches: [main, master]
   workflow_dispatch:
 
 permissions:
@@ -25,6 +23,14 @@ jobs:
         with:
           node-version: 20
           cache: npm
+      - name: Compute base path
+        run: |
+          REPO="${{ github.event.repository.name }}"
+          if [[ "$REPO" == *.github.io ]]; then
+            echo "VITE_BASE_PATH=/" >> "$GITHUB_ENV"
+          else
+            echo "VITE_BASE_PATH=/$REPO/" >> "$GITHUB_ENV"
+          fi
       - run: npm ci
       - run: npm run build
       - uses: actions/configure-pages@v4
@@ -40,3 +46,4 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+        
