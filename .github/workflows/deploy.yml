@@ -22,7 +22,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
       - name: Compute base path
         run: |
           REPO="${{ github.event.repository.name }}"
@@ -31,10 +30,12 @@ jobs:
           else
             echo "VITE_BASE_PATH=/$REPO/" >> "$GITHUB_ENV"
           fi
-      - run: npm ci
-      - run: npm run build
+      - name: Install dependencies
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Build
+        run: npm run build
       - uses: actions/configure-pages@v4
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v4
         with:
           path: ./dist
   deploy:
@@ -46,4 +47,3 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
-        
